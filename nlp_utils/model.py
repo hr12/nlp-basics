@@ -15,7 +15,7 @@ def train_model(classifier, train_x, train_lables, validation_x, validation_labe
     if not neural_network:
         classifier.fit(train_x, train_lables)
     else:
-        classifier.fit(train_x, train_lables, validation_data = (validation_x, validation_labels),epochs=epochs, callbacks = callback)
+        history = classifier.fit(train_x, train_lables, validation_data = (validation_x, validation_labels),epochs=epochs, callbacks = callback)
     
     # validation
     predictions = classifier.predict(validation_x)
@@ -33,7 +33,6 @@ def train_model(classifier, train_x, train_lables, validation_x, validation_labe
     if (submissions_data is not None) & (test_vectors is not None):
         test_preds = classifier.predict(test_vectors)
         if neural_network:
-#             test_preds = test_preds.argmax(axis = -1)
             test_preds = np.where(test_preds>0.5,1,0)
     
         submissions_data['target'] = test_preds
@@ -44,3 +43,5 @@ def train_model(classifier, train_x, train_lables, validation_x, validation_labe
         print("\t {}".format(file_export_path))
         submissions_data.to_csv(file_export_path, index = False)
         
+    if neural_network:
+        return history
