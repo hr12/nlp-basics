@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 
-def plot_metrics(history, metrics=['loss', 'accuracy']):
+def plot_metrics(history, metrics=['loss', 'binary_accuracy']):
     
     num_metrics = len(metrics)
     
